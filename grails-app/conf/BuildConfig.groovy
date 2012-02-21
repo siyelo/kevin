@@ -33,22 +33,24 @@ grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
-
 grails.project.source.level = 1.6
 
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
     inherits("global") {
-        // uncomment to disable ehcache
-         excludes 'ehcache'
-		 
-		 buildSettings.dependenciesExternallyConfigured = true
+		//buildSettings.dependenciesExternallyConfigured = true
+		
+		// we exclude ehcache from the grails framework since
+		// it is already included in another dep
+		excludes "ehcache"
+		excludes "log4j", "grails-plugin-log4j"
     }
     log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
 //	checksums true
 	
     repositories {
-		inherits false 
+		inherits false
+		
         grailsPlugins()
         grailsHome()
         grailsCentral()
@@ -79,17 +81,17 @@ grails.project.dependency.resolution = {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
 		// JAQL dependencies - jaql itself is in the lib/ folder
-		compile ("org.apache.hadoop:hadoop-core:0.20.203.0") {
-			transitive = false
-		}
+		compile ("org.apache.hadoop:hadoop-core:0.20.203.0") {transitive = false}
+		compile 'net.sf.ezmorph:ezmorph:1.0.6'
+		compile 'org.supercsv:SuperCSV:1.52'
 		
+		runtime 'mysql:mysql-connector-java:5.1.13'
+
+		build   'ch.qos.logback:logback-classic:1.0.0'
+		runtime 'ch.qos.logback:logback-classic:1.0.0'
+
 		// because of GRAILS-6147, this dependency is in lib instead of here
 //		compile group: "net.sf.json-lib", name: "json-lib", version: "2.4", classifier: "jdk15"
-		compile 'net.sf.ezmorph:ezmorph:1.0.6'
-		
-        runtime 'mysql:mysql-connector-java:5.1.13'
-		
-//		compile ("net.bull.javamelody:javamelody-core:1.31.0")
 
 //		test"org.codehaus.geb:geb-spock:0.6.0"
 //		test("org.seleniumhq.selenium:selenium-firefox-driver:latest.release")
@@ -98,10 +100,6 @@ grails.project.dependency.resolution = {
 //			excludes "xml-apis", "xmlParserAPIs"
 //		}
 //		test 'org.gmock:gmock:0.8.1'
-		
-		// those are for the migration script to work
-//		compile 'org.hisp.dhis:dhis-service-importexport:2.2-SNAPSHOT'
-		compile 'org.supercsv:SuperCSV:1.52'
     }
 
 	plugins {
