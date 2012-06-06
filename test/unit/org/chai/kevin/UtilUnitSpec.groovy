@@ -1,9 +1,12 @@
 package org.chai.kevin;
 
+import java.nio.charset.Charset;
 import java.text.ParseException;
+import java.util.zip.ZipInputStream;
 
 import grails.plugin.spock.UnitSpec
 
+import org.apache.commons.lang.LocaleUtils;
 import org.chai.kevin.data.Type;
 import org.chai.kevin.util.Utils;
 import org.chai.kevin.value.Value;
@@ -78,8 +81,8 @@ public class UtilUnitSpec extends UnitSpec {
 		
 		then:
 		thrown ParseException
-		
 	}
+	
 	def "test getStringValue"(){
 		setup:
 		boolean boolValue= true;
@@ -97,11 +100,11 @@ public class UtilUnitSpec extends UnitSpec {
 		def valueDate = Value.VALUE_DATE(nowDate);
 		
 		when:
-		def string = Utils.getValueString(typeString,valueString);
-		def number = Utils.getValueString(typeString,valueNumber);
-		def date = Utils.getValueString(typeString,valueDate);
-		def bool = Utils.getValueString(typeString,valueBool);
-		def enumValue= Utils.getValueString(typeEnum,valueString);
+		def string = Utils.getValueString(typeString, valueString);
+		def number = Utils.getValueString(typeString, valueNumber);
+		def date = Utils.getValueString(typeString, valueDate);
+		def bool = Utils.getValueString(typeString, valueBool);
+		def enumValue= Utils.getValueString(typeEnum, valueString);
 		
 		then:
 		string.equals("Value Text");
@@ -109,7 +112,24 @@ public class UtilUnitSpec extends UnitSpec {
 		bool.equals(boolValue.toString());
 		enumValue.equals("Value Text")
 		date.equals(Utils.formatDate(nowDate));	
+	}
+	
+	def "test zip file with accent"() {
+		setup:
+		def file = File.createTempFile("test", "tmp")
+		def fileWriter = new FileWriter(file)
+		fileWriter.append("é")
+ 		fileWriter.flush()
+		fileWriter.close()
 		
-			
+		when:
+		def zipFile = Utils.getZipFile(file, "test")
+		def inputStream = new ZipInputStream(new FileInputStream(zipFile))
+		inputStream.getNextEntry()
+		def reader = new BufferedReader(new InputStreamReader(inputStream))
+		
+		then:
+		reader.readLine() == "é"
+		reader.close()
 	}
 }

@@ -40,20 +40,17 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.zip.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.ClassUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.chai.kevin.Exportable;
-import org.chai.kevin.LanguageService;
-import org.chai.kevin.data.EnumOption;
-import org.chai.kevin.data.EnumService;
 import org.chai.kevin.data.Type;
 import org.chai.kevin.location.DataLocationType;
 import org.chai.kevin.value.Value;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 /**
  * @author Jean Kahigiso M.
@@ -63,7 +60,6 @@ public class Utils {
 	
 	private final static String DATE_FORMAT = "dd-MM-yyyy";
 	private final static String DATE_FORMAT_TIME = "dd-MM-yyyy hh:mm:ss";
-	private final static String CSV_FILE_EXTENSION = ".csv";
 	private final static String ZIP_FILE_EXTENSION = ".zip";
 	
 	public final static String CODE_DELIMITER = "~";
@@ -160,7 +156,6 @@ public class Utils {
 		return "";
 	}
 	
-	//TODO get ride of this
 	public static File getZipFile(File file, String filename) throws IOException {		
 		List<File> files = new ArrayList<File>();
 		files.add(file);
@@ -168,13 +163,10 @@ public class Utils {
 	}
 	
 	public static File getZipFile(List<File> files, String filename) throws IOException {		
-		
 		File zipFile = File.createTempFile(filename, ZIP_FILE_EXTENSION);
-
 		ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(zipFile));
-				
 		try {
-			for(File file: files){
+			for (File file: files) {
 				FileInputStream fileInputStream = new FileInputStream(file);
 			    ZipEntry zipEntry = new ZipEntry(file.getName());
 			    zipOutputStream.putNextEntry(zipEntry);
@@ -188,7 +180,6 @@ public class Utils {
 		    IOUtils.closeQuietly(zipOutputStream);
 		    IOUtils.closeQuietly(zipOutputStream);
 		}
-			
 		return zipFile;
 	}
 	
