@@ -79,12 +79,12 @@ class EntityExportServiceSpec extends EntityIntegrationTests {
 	
 	def "test entity fields are exportable"(){
 		when:
-		def ie = newIsExportableEntity("ieCode1", 1)
+		def ie = newIsExportableEntity("code1", 1)
 		List<Field> fields = entityExportService.getFieldHeaders(ie.class)				
 		def entityData = entityExportService.getEntityData(ie, fields)
 		
 		then:
-		entityData[0].equals("ieCode1")
+		entityData[0].equals("code1")
 		entityData[1].equals("1")
 		entityData[2].equals(Utils.formatDate(new Date()))
 		entityData[3].equals("")
@@ -94,7 +94,7 @@ class EntityExportServiceSpec extends EntityIntegrationTests {
 		entityData = entityExportService.getEntityData(ie, fields)
 		
 		then:
-		entityData[0].equals("ieCode1")
+		entityData[0].equals("code1")
 		entityData[1].equals("1")
 		entityData[2].equals("30-05-2012")
 		entityData[3].equals(ie.trans.toExportString())
@@ -112,13 +112,13 @@ class EntityExportServiceSpec extends EntityIntegrationTests {
 		entityData[2].equals("")
 		
 		when:
-		te.iee = new IsExportableEntity(code: "ieCode", num: 1)
+		te.iee = newIsExportableEntity(code: "code1", num: 1)
 		te.inee = new IsNotExportableEntity()
 		entityData = entityExportService.getEntityData(te, fields)
 		
 		then:
 		entityData[0].equals("code")
-		entityData[1].equals("[~ieCode~]")
+		entityData[1].equals("[~code1~]")
 		entityData[2].equals(Utils.VALUE_NOT_EXPORTABLE)
 	}
 	
@@ -134,23 +134,23 @@ class EntityExportServiceSpec extends EntityIntegrationTests {
 		entityData[2].equals("")
 		
 		when:
-		te.listIee = [new IsExportableEntity(code: "ieCode1", num: 1)] 
+		te.listIee = [newIsExportableEntity(code: "code1", num: 1)] 
 		te.listInee = [new IsNotExportableEntity(), new IsNotExportableEntity()]		
 		entityData = entityExportService.getEntityData(te, fields)
 		
 		then:
 		entityData[0].equals("code")
-		entityData[1].equals("[[~ieCode1~]]")
+		entityData[1].equals("[[~code1~]]")
 		entityData[2].equals(Utils.VALUE_NOT_EXPORTABLE)
 		
 		when:
-		te.listIee = [new IsExportableEntity("ieCode1", 1), new IsExportableEntity("ieCode2", 2)]
+		te.listIee = [newIsExportableEntity("code1", 1), newIsExportableEntity("code2", 2)]
 		te.listInee = [new IsNotExportableEntity(), new IsNotExportableEntity()]
 		entityData = entityExportService.getEntityData(te, fields)
 		
 		then:
 		entityData[0].equals("code")
-		entityData[1].equals("[[~ieCode1~], [~ieCode2~]]")
+		entityData[1].equals("[[~code1~], [~code2~]]")
 		entityData[2].equals(Utils.VALUE_NOT_EXPORTABLE)		
 	}	
 	

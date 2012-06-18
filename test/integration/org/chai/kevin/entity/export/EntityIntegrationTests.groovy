@@ -29,18 +29,14 @@ public class EntityIntegrationTests extends IntegrationTests {
 		
 		public String code;
 		public Integer num;
-		public Date dat = new Date();
-		public Translation trans = new Translation();
+		public Date dat;
+		public Translation trans;		
 		
-		public IsExportableEntity() {
-			this.code = "";
-			this.num = 0;
-		}
-		
-		public IsExportableEntity(String code, Integer num, Date dat) {
+		public IsExportableEntity(String code, Integer num, Date dat, Translation trans){
 			this.code = code;
 			this.num = num;
 			this.dat = dat;
+			this.trans = trans;
 		}
 		
 		public String toExportString() {
@@ -59,12 +55,8 @@ public class EntityIntegrationTests extends IntegrationTests {
 	public class TestEntity implements Exportable, Importable {
 		
 		public String code;
-		public IsExportableEntity iee = new IsExportableEntity();
-		public IsNotExportableEntity inee = new IsNotExportableEntity();
-		
-		public TestEntity(String code) {
-			this.code = code;
-		}
+		public IsExportableEntity iee;
+		public IsNotExportableEntity inee;	
 				
 		public String toExportString() {
 			return "[" + Utils.formatExportCode(code) + "]";
@@ -79,12 +71,8 @@ public class EntityIntegrationTests extends IntegrationTests {
 	public class TestEntities implements Exportable, Importable {
 		
 		public String code;
-		public List<IsExportableEntity> listIee = new ArrayList<IsExportableEntity>();
-		public List<IsNotExportableEntity> listInee = new ArrayList<IsNotExportableEntity>();
-		
-		public TestEntities(String code) {
-			this.code = code;
-		}
+		public List<IsExportableEntity> listIee;
+		public List<IsNotExportableEntity> listInee;		
 			
 		public String toExportString() {
 			return "[" + Utils.formatExportCode(code) + "]";
@@ -96,18 +84,26 @@ public class EntityIntegrationTests extends IntegrationTests {
 	}
 	
 	def static newIsExportableEntity() {
-		return new IsExportableEntity(code: "code", num: 0).save(failOnError: true);
+		return new IsExportableEntity("code", 0, new Date(), new Translation()).save(failOnError: true);
 	}
 	
 	def static newIsExportableEntity(def code, def num) {
-		return new IsExportableEntity(code: code, num: num).save(failOnError: true);
+		return new IsExportableEntity(code: code, num: num, dat: new Date(), trans: new Translation()).save(failOnError: true);
 	}
 	
 	def static newTestEntity(def code){
-		return new TestEntity(code: code).save(failOnError: true);
+		return new TestEntity(
+				code: code, 
+				listIee: new ArrayList<IsExportableEntity>(), 
+				listInee: new ArrayList<IsNotExportableEntity>()
+			).save(failOnError: true);
 	}
 	
 	def static newTestEntities(def code){
-		return new TestEntities(code: code).save(failOnError: true);
+		return new TestEntities(
+				code: code, 
+				listIee: new ArrayList<IsExportableEntity>(), 
+				listInee: new ArrayList<IsNotExportableEntity>()
+			).save(failOnError: true);
 	}
 }
