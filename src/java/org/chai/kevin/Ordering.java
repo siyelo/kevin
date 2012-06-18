@@ -76,8 +76,8 @@ public class Ordering extends JSONMap<Integer> implements Comparable<Ordering>, 
 
 	@Override
 	public Ordering fromExportString(Object value) {
-		JSONMap jsonMap = super.fromExportString(value);
-		Ordering ordering = new Ordering(jsonMap);
+		Ordering ordering = new Ordering();
+		ordering.setJsonText(value.toString());		
 		return ordering;
 	}
 }

@@ -25,7 +25,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity(name = "Aggregation")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "dhsst_data_calculation_aggregation")
-public class Aggregation extends Calculation<AggregationPartialValue> {
+public class Aggregation extends Calculation<AggregationPartialValue> implements Exportable {
 
 	@Override
 	public AggregationValue getCalculationValue(

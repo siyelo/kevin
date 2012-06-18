@@ -46,6 +46,14 @@ public class ImporterError {
 		this.messageCode = messageCode;
 	}
 	
+	public ImporterError(Integer lineNumber, String header, String messageCode) {
+		super();
+		this.fileName = "";
+		this.lineNumber = lineNumber;
+		this.header = header;
+		this.messageCode = messageCode;
+	}
+	
 	public Integer getLineNumber() {
 		return lineNumber;
 	}

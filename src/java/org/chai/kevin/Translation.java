@@ -5,7 +5,6 @@ import javax.persistence.Embeddable;
 import org.chai.kevin.entity.export.Exportable;
 import org.chai.kevin.entity.export.Importable;
 import org.chai.kevin.json.JSONMap;
-import org.hibernate.sql.ordering.antlr.TranslationContext;
 
 /* 
  * Copyright (c) 2011, Clinton Health Access Initiative.
@@ -60,8 +59,8 @@ public class Translation extends JSONMap<String> implements Exportable, Importab
 
 	@Override
 	public Translation fromExportString(Object value) {
-		JSONMap jsonMap = super.fromExportString(value);
-		Translation translation = new Translation(jsonMap);
+		Translation translation = new Translation();
+		translation.setJsonText(value.toString());
 		return translation;
 	}
 

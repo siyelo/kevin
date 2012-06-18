@@ -6,12 +6,10 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.ClassUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -52,38 +50,26 @@ public class EntityExportService {
 		try {			
 			
 			// headers
-			List<Field> entityFieldHeaders = new ArrayList<Field>();			
-			Class<?> headerClass = clazz;
-			while(headerClass != null && headerClass != Object.class){				
-				Field[] classFields = headerClass.getDeclaredFields();
-				for(Field field : classFields){
-					if(field.getName().equalsIgnoreCase(ID_HEADER)) continue;
-					entityFieldHeaders.add(field);
-				}
-				headerClass = headerClass.getSuperclass();
-			}
-			Collections.sort(entityFieldHeaders, EntityHeaderSorter.BY_FIELD());
+			List<Field> fieldHeaders = getFieldHeaders(clazz);
 			
 			//TODO custom headers/values
-			//ability to add custom headers
-			//and a custom "handle" method to add the custom values to each row			
+			//ability to add custom headers			
 						
-			List<String> entityHeaders = new ArrayList<String>();
-			for(Field field : entityFieldHeaders){
-				entityHeaders.add(field.getName());				
+			List<String> csvHeaders = new ArrayList<String>();
+			for(Field field : fieldHeaders){
+				csvHeaders.add(field.getName());				
 			}			
-			if(entityHeaders.toArray(new String[0]) != null)
-				writer.writeHeader(entityHeaders.toArray(new String[0]));									
+			if(csvHeaders.toArray(new String[0]) != null)
+				writer.writeHeader(csvHeaders.toArray(new String[0]));									
 			
 			//entities
 			List<Object> entities = getEntities(clazz);
 			for(Object entity : entities){
 				if (log.isDebugEnabled()) log.debug("getExportFile(entity="+entity+")");				
-				List<String> entityData = getEntityData(entity, entityFieldHeaders);
+				List<String> entityData = getEntityData(entity, fieldHeaders);
 				
 				//TODO custom headers/values
 				//ability to add custom headers
-				//and a custom "handle" method to add the custom values to each row
 				
 				if(entityData != null && !entityData.isEmpty())
 					writer.write(entityData);
@@ -99,6 +85,21 @@ public class EntityExportService {
 		return csvFile;
 	}	
 	
+	public List<Field> getFieldHeaders(Class<?> clazz) {
+		List<Field> fieldHeaders = new ArrayList<Field>();
+		Class<?> headerClass = clazz;
+		while(headerClass != null && headerClass != Object.class){				
+			Field[] classFields = headerClass.getDeclaredFields();
+			for(Field field : classFields){
+				if(field.getName().equalsIgnoreCase(ID_HEADER)) continue;
+				fieldHeaders.add(field);
+			}
+			headerClass = headerClass.getSuperclass();
+		}
+		Collections.sort(fieldHeaders, EntityHeaderSorter.BY_FIELD());
+		return fieldHeaders;
+	}
+
 	private List<Object> getEntities(Class<?> clazz){
 		List<Object> entities = new ArrayList<Object>();
 		entities = (List<Object>) sessionFactory.getCurrentSession().createCriteria(clazz).list();
@@ -157,7 +158,7 @@ public class EntityExportService {
 							}						
 						}		
 					}
-					//value is a primitive or 'wrapper to primitive' or string type
+					//value is a primitive or 'wrapper to primitive' type
 					else if(Utils.isExportablePrimitive(exportableClazz) != null){
 						exportValue = value.toString();
 					}

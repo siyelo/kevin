@@ -53,7 +53,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity(name="Average")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name="dhsst_data_calculation_average")
-public class Average extends Calculation<AveragePartialValue> {
+public class Average extends Calculation<AveragePartialValue> implements Exportable {
 
 	@Override
 	public AverageValue getCalculationValue(List<AveragePartialValue> partialValues, Period period, CalculationLocation location) {

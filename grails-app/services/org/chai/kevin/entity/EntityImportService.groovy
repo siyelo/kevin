@@ -65,7 +65,7 @@ public class EntityImportService {
 				fieldNames.add(field.getName());
 			}			
 			if(!Arrays.asList(headers).containsAll(fieldNames))
-				manager.getErrors().add(new ImporterError(readFileAsMap.getLineNumber(),Arrays.asList(headers).toString(),"import.error.message.unknown.header"));
+				manager.getErrors().add(new ImporterError(readFileAsMap.getLineNumber(),Arrays.asList(headers).toString(),"Import entity headers are invalid."));
 			else{
 				
 				List<String> entityCodes = new ArrayList<String>();									
@@ -77,13 +77,14 @@ public class EntityImportService {
 					
 					String entityCode = row.get(CODE_HEADER);					
 					if(entityCodes.contains(entityCode)){
-						manager.getErrors().add(new ImporterError(readFileAsMap.getLineNumber(),CODE_HEADER,"import.error.message.entitycodeduplicate"));
+						manager.getErrors().add(new ImporterError(readFileAsMap.getLineNumber(),CODE_HEADER,"Import entity code " + entityCode + " is a duplicate."));
 						manager.incrementNumberOfUnsavedRows();
 						continue;
 					}
 					entityCodes.add(entityCode);
-														
-					if(entityCode == null || entityCode.isEmpty()){
+					
+					entity = findEntityByCode(entityCode, clazz);										
+					if(entity == null){
 						try {
 							entity = clazz.newInstance();
 						} catch (InstantiationException e) {
@@ -92,15 +93,12 @@ public class EntityImportService {
 							e.printStackTrace();
 						}
 					}
-					else{
-						entity = findEntityByCode(entityCode, clazz);
-					}
 					
 					if(entity == null){
-						manager.getErrors().add(new ImporterError(readFileAsMap.getLineNumber(),CODE_HEADER,"import.error.message.entitynull"));
+						manager.getErrors().add(new ImporterError(readFileAsMap.getLineNumber(),CODE_HEADER,"Import entity is null."));
 						manager.incrementNumberOfUnsavedRows();
 						continue;
-					}									
+					}								
 						
 					EntityImportSanitizer sanitizer = new EntityImportSanitizer(manager.getErrors());
 					sanitizer.setHeaders(Arrays.asList(headers))
@@ -113,7 +111,7 @@ public class EntityImportService {
 						manager.incrementNumberOfRowsSavedWithError(1);
 					
 					if(!entity.validate()){
-						manager.getErrors().add(new ImporterError(readFileAsMap.getLineNumber(),"blank","import.error.message.entityinvalid"));
+						manager.getErrors().add(new ImporterError(readFileAsMap.getLineNumber(),"blank","Import entity is invalid."));
 						manager.incrementNumberOfUnsavedRows();
 					}
 					else{
@@ -135,7 +133,7 @@ public class EntityImportService {
 		
 	}
 
-	private Object setEntityData(Map<String, String> row, Object entity, List<Field> fields, EntityImportSanitizer sanitizer){					
+	public Object setEntityData(Map<String, String> row, Object entity, List<Field> fields, EntityImportSanitizer sanitizer){					
 		
 		for(Field field : fields){
 			String fieldName = field.getName();
@@ -150,6 +148,7 @@ public class EntityImportService {
 				}				
 										
 				Object newValue = row.get(fieldName);
+				
 				if(newValue == null || newValue.isEmpty())
 					newValue = "null";
 				else{
@@ -212,39 +211,35 @@ public class EntityImportService {
 			Object importValue = null;			
 			
 			if(!headers.contains(header)){
-				errors.add(new ImporterError(lineNumber, header, "import.error.message.unknown.header"));
+				errors.add(new ImporterError(lineNumber, header, "Import entity header is invalid."));
 				return importValue;
 			}			
 																								
 			if(value != null && !value.isEmpty()){
 			
 				//value is not a list
-				boolean isAssignable = Importable.class.isAssignableFrom(valueClazz);
-				Class<?>[] clazzInterfaces = valueClazz.getInterfaces();
 				Class<?> importableClazz = valueClazz;
 				
 				//value is a list
 				if(innerClazz != null){
-					isAssignable = Importable.class.isAssignableFrom(innerClazz);
-					clazzInterfaces = innerClazz.getInterfaces();
 					importableClazz = innerClazz;
-				}		
+				}								
 				
 				Importable importable = null;
 				
 				//value is importable
-				if(isAssignable && Arrays.asList(clazzInterfaces).contains(Importable.class)){
+				if(Utils.isImportable(importableClazz) != null){
 
 					importable = (Importable) importableClazz.newInstance();
 					
-					//value is a map
+					//value is a json map
 					if(importable instanceof JSONMap){
 						importValue = getImportValue(importable, value);
 					}
 					else{																		
 						
 						List<?> importEntities = new ArrayList<?>();
-						importEntities = getImportValues(importable, value, importableClazz, header);
+						importEntities = getImportValues(importable, value, importableClazz, header);						
 						
 						//value is a list
 						if(innerClazz != null){							
@@ -256,13 +251,13 @@ public class EntityImportService {
 						}
 						else{
 							this.setNumberOfErrorInRows(this.getNumberOfErrorInRows()+1);
-							errors.add(new ImporterError(lineNumber, header,"import.error.message.importentitiesinvalid"));
+							errors.add(new ImporterError(lineNumber, header,"Import entity " + importableClazz + " is invalid."));
 						}
 					}										
 					
 				}
-				//value is a primitive or 'wrapper to primitive' or string type
-				else if(importableClazz.isPrimitive() || ClassUtils.wrapperToPrimitive(importableClazz) != null){				
+				//value is a primitive or 'wrapper to primitive' type
+				else if(Utils.isImportablePrimitive(importableClazz) != null){				
 					importValue = value;
 				}
 				//value is a string
@@ -271,12 +266,12 @@ public class EntityImportService {
 				}
 				//value is a date
 				else if(importableClazz.equals(Date.class)){
-					//TODO				
+					importValue = new Date(value);				
 				}
 				//value is not importable or a primitive type
 				else {
 					this.setNumberOfErrorInRows(this.getNumberOfErrorInRows()+1);
-					errors.add(new ImporterError(lineNumber, header,"import.error.message.entitynotimportable"));
+					errors.add(new ImporterError(lineNumber, header,Utils.VALUE_NOT_IMPORTABLE));
 				}
 			}					
 			
@@ -304,7 +299,7 @@ public class EntityImportService {
 					}
 					else{
 						this.setNumberOfErrorInRows(this.getNumberOfErrorInRows()+1);
-						errors.add(new ImporterError(lineNumber, header,"import.error.message.importentitynull"));
+						errors.add(new ImporterError(lineNumber, header,"Import entity " + importableClazz + " code " + entityCode + "is invalid."));
 						break;
 					}
 				}
@@ -313,12 +308,7 @@ public class EntityImportService {
 		}		
 	}
 	
-	public <T extends Object> T findEntityById(String id, Class<T> clazz) {
-		Long entityId = Long.parseLong(id);
-		return (T)sessionFactory.getCurrentSession().get(clazz, entityId);
-	}
-	
-	public <T extends Object> T findEntityByCode(String code, Class<T> clazz) {
+	private <T extends Object> T findEntityByCode(String code, Class<T> clazz) {
 		return (T)sessionFactory.getCurrentSession().createCriteria(clazz)
 				.add(Restrictions.eq("code", code)).uniqueResult();
 	}

@@ -52,7 +52,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity(name="Summ")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name="dhsst_data_calculation_sum")
-public class Sum extends Calculation<SumPartialValue> {
+public class Sum extends Calculation<SumPartialValue> implements Exportable {
 	
 	@Override
 	public SumValue getCalculationValue(List<SumPartialValue> partialValues, Period period, CalculationLocation location) {

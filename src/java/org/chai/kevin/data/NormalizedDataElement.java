@@ -15,14 +15,12 @@ import javax.persistence.Transient;
 
 import org.chai.kevin.Period;
 import org.chai.kevin.entity.export.Exportable;
-import org.chai.kevin.location.DataLocation;
 import org.chai.kevin.util.Utils;
-import org.chai.kevin.value.ExpressionService;
 import org.chai.kevin.value.NormalizedDataElementValue;
 
 @Entity(name="NormalizedDataElement")
 @Table(name="dhsst_data_normalized_element")
-public class NormalizedDataElement extends DataElement<NormalizedDataElementValue> {
+public class NormalizedDataElement extends DataElement<NormalizedDataElementValue> implements Exportable {
 
 	// json text example : {"1":{"DH":"$1 + $2"}, "2":{"HC":"$1 + $2 + $3"}}
 	private ExpressionMap expressionMap = new ExpressionMap();

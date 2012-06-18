@@ -236,8 +236,7 @@ class ImporterSpec extends IntegrationTests {
 		typeNumber.getValue(RawDataElementValue.list()[0].value, "[0].age").getNumberValue()==1
 		typeNumber.getValue(RawDataElementValue.list()[0].value, "[1].age").isNull();
 	}
-	
-	
+		
 	
 	def "get normalized import enum data from csv"(){
 		when:

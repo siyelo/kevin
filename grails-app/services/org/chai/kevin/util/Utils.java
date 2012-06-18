@@ -46,14 +46,11 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.ClassUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
-import org.chai.kevin.LanguageService;
-import org.chai.kevin.data.EnumOption;
-import org.chai.kevin.data.EnumService;
 import org.chai.kevin.data.Type;
 import org.chai.kevin.entity.export.Exportable;
+import org.chai.kevin.entity.export.Importable;
 import org.chai.kevin.location.DataLocationType;
 import org.chai.kevin.value.Value;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 /**
  * @author Jean Kahigiso M.
@@ -70,7 +67,8 @@ public class Utils {
 	public final static String CODE_PATTERN = 
 			CODE_DELIMITER + "[^" + CODE_DELIMITER + "]+" + CODE_DELIMITER;
 //	public final static String CODE_MISSING = "MISSING_CODE";
-	public final static String VALUE_NOT_EXPORTABLE = "VALUE_NOT_EXPORTABLE";	
+	public final static String VALUE_NOT_EXPORTABLE = "VALUE_NOT_EXPORTABLE";
+	public final static String VALUE_NOT_IMPORTABLE = "VALUE_NOT_IMPORTABLE";
 	
 	public static Set<String> split(String string) {
 		Set<String> result = new HashSet<String>();
@@ -226,6 +224,24 @@ public class Utils {
 			exportableClazz = clazz;
 		}
 		return exportableClazz;
+	}
+	
+	public static Class<?> isImportable(Class<?> clazz){
+		Class<?> importableClazz = null;		
+		boolean isAssignable = Importable.class.isAssignableFrom(clazz);				
+		Class<?>[] clazzInterfaces = clazz.getInterfaces();							
+		if(isAssignable && Arrays.asList(clazzInterfaces).contains(Importable.class)){
+			importableClazz = clazz;
+		}
+		return importableClazz;
+	}						
+	
+	public static Class<?> isImportablePrimitive(Class<?> clazz){
+		Class<?> importableClazz = null;		
+		if(clazz.isPrimitive() || ClassUtils.wrapperToPrimitive(clazz) != null){
+			importableClazz = clazz;
+		}
+		return importableClazz;
 	}
 	
 	public static String formatExportCode(String code){
