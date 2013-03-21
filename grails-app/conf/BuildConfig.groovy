@@ -125,7 +125,7 @@ grails.project.dependency.resolution = {
 		
 		// application plugins
 		compile ':chai-locations:0.5.2-CHAI'
-		compile ':chai-kevin-data:0.1.9-CHAI'
+		compile ':chai-kevin-data:0.1.10-CHAI'
 		
 		// cloud foundry support
 		compile ":cloud-foundry:1.2.3"
@@ -137,4 +137,4 @@ grails.project.dependency.resolution = {
 
 }
 
-// grails.plugin.location.'chai-kevin-data' = "../chai-kevin-data"
+// grails.plugin.location.'chai-kevin-data' = "/Users/susanmlister/workspace/chai-kevin-data"

@@ -173,7 +173,7 @@ class DataController extends AbstractController {
 	def search = {
 		adaptParamsForList()
 		
-		def data = dataService.getData(params.int('data'), DataElement.class)
+		def data = dataService.getData(params.int('data'), Data.class)
 		if (data == null) {
 			response.sendError(404)
 		}
