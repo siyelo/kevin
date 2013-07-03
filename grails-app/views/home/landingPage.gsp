@@ -9,8 +9,8 @@
 	<r:require modules="chosen,richeditor,fieldselection,cluetip,form,dropdown,datepicker,list"/>
 </head>
 <body>
-	<h3 class="heading2-bar text-center"><g:message code="landingpage.welcome.label"/></h3>
-	<div class="main">
+	<h3 class="landing-heading">Welcome Dime, <span>Please choose one of the three options below to continue</span></h3>
+	<div class="main" id="landing-main">
 		<%
 			if (SecurityUtils.subject.isPermitted('menu:reports') 
 				&& SecurityUtils.subject.isPermitted('menu:survey')
@@ -19,7 +19,41 @@
 			}
 			else size = "two"
 		%>
-		<shiro:hasPermission permission="menu:reports">
+
+		<ul class="landing-options">
+			<li class="active">
+				<a href="#"><img src="${resource(dir:'images',file:'/icons/icon-reports.png')}" alt="Home"/><span>Reports</span></a>
+				<div>
+					<img width="240" height="187" class="left" src="${resource(dir:'images',file:'reports.png')}"/>
+					<h4>Write and review your Reports</h4>
+					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+					<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan.</p>
+					<p><a class="next white" href="#">Go to Reports</a></p>
+				</div>
+			</li>
+			<li>
+				<a href="#"><img src="${resource(dir:'images',file:'/icons/icon-survey.png')}" alt="Home"/><span>Survey</span></a>
+				<div>
+					<img width="240" height="187" class="left" src="${resource(dir:'images',file:'reports.png')}"/>
+					<h4>Write and review your Surveys</h4>
+					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+					<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan.</p>
+					<p><a class="next white" href="#">Go to Reports</a></p>
+				</div>
+			</li>
+			<li>
+				<a href="#"><img src="${resource(dir:'images',file:'/icons/icon-planning.png')}" alt="Home"/><span>Planning</span></a>
+				<div>
+					<img width="240" height="187" class="left" src="${resource(dir:'images',file:'reports.png')}"/>
+					<h4>Write and review your Plans</h4>
+					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+					<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan.</p>
+					<p><a class="next white" href="#">Go to Reports</a></p>
+				</div>
+			</li>
+		</ul>
+
+		<!-- <shiro:hasPermission permission="menu:reports">
 			<g:render template="landingPageItem" model="[
 				title: message(code: 'landingpage.reports.label'), image: 'reports.png', text: message(code: 'landingpage.reports.text'),
 				class: size, link: createLink(controller: 'dashboard', action: 'view')]"/>
@@ -35,7 +69,7 @@
 			<g:render template="landingPageItem" model="[
 				title: message(code: 'landingpage.planning.label'), image: 'planning.png', text: message(code: 'landingpage.planning.text'),
 				class: size, link: createLink(controller: 'editPlanning', action: 'view')]"/>
-		</shiro:hasPermission>
+		</shiro:hasPermission> -->
 		
 		<g:if test="${false}">
 			<!-- deactivated for now -->

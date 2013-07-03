@@ -236,6 +236,18 @@ button, input[type=submit], .next
       color: #fff
       +linear-gradient(color-stops($yes, $yes - #111))
       +text-shadow($yes - #333, 0, 1px, 0)
+  &.white
+    background: #fff
+    background-image: none
+    border-color: #ccc
+    color: $primary
+    +box-shadow(#ddd 1px 1px 2px)
+    +transition(all .4s)
+    &:hover, &:focus
+      border-color: #bbb
+      color: #333
+      +box-shadow(#ccc 1px 1px 2px)
+
   
 select
   background: #f6f6f6

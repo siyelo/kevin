@@ -6,6 +6,7 @@
 <head>
 	<title><g:layoutTitle /></title>
 	<link rel="shortcut icon" href="${resource(dir:'images',file:'favicon.ico')}" type="image/x-icon" />
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
 	<g:layoutHead />
 	<r:require module="core"/>
 	<r:layoutResources/>
@@ -68,7 +69,12 @@
 				<g:message code="header.labels.dhsst"/>
 			</h2>
 			
-			<ul id="logout">
+			<div id="main_search">
+				<input type="text" placeholder="Search here" />
+				<input type="submit" value="Search" class="small" />
+			</div>
+
+			<!-- <ul id="logout">
 				<shiro:hasPermission permission="admin">
 					<li>
 						<a class="redmine follow" target="_blank" href="${grailsApplication.config.site.bugtracker.url}"><g:message code="header.labels.redmine"/></a>
@@ -77,7 +83,7 @@
 				<li>
 					<a class="redmine follow" href="${createLink(uri:'/helpdesk')}"><g:message code="header.labels.helpdesk"/></a>
 				</li>
-			</ul>
+			</ul> -->
 		</div>
 			
 		<div class="clear"></div>

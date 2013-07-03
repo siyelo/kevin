@@ -1,5 +1,5 @@
 body
-  background: url('../images/bg/body_bg.png')
+  background: #f5f5f5
   font-family: Arial, Helvetica, sans-serif
 
 .wrapper
@@ -10,24 +10,98 @@ body
   
 #content
   padding-top: 15px
-  background: url('../images/bg/content_bg.png') repeat-x top center
   
   .main
     padding: 15px
     font-size: 12px
-    background: #fff
-    +border-bottom-radius
-    +box-shadow(#ccc 0 0 2px)
     +pie-clearfix
-    
+  #landing-main
+    border-top: 1px solid #f9f9f9
+    padding: 15px 0
+
+
+.landing-heading
+  border-bottom: 1px solid #ddd
+  color: #444
+  font: bold 22px/1.5 "Droid Sans", sans-serif
+  letter-spacing: 0.035em
+  margin-top: 30px
+  padding-bottom: 15px
+  span
+    color: #666
+    display: block
+    font: normal 13px arial, sans-serif
+
+.landing-options
+  border-bottom: 1px solid #f9f9f9
+  padding: 0 10% 310px
+  position: relative
+  +background-image(radial-gradient(center bottom, #f2f2f2, #f5f5f5 70%))
+  +pie-clearfix
+  li
+    float: left
+    text-align: center
+    width: 33.3%
+    opacity: 0.8
+    +transition(opacity .5s)
+    &:hover, &:focus, &.active
+      opacity: 1
+      div
+        display: block
+    > a
+      padding: 35px 0 47px
+    &.active > a
+      background: url('../images/landing-active.png') center bottom no-repeat
+      position: relative
+      z-index: 100
+  a, span
+    display: inline-block
+    text-decoration: none
+  span
+    color: #555
+    font: bold 22px/2 "Droid Sans", sans-serif
+  img
+    display: inline-block
+    margin-bottom: 5px
+  .next
+    margin-top: 10px
+  div
+    border-top: 1px solid #ddd
+    bottom: 0
+    display: none
+    height: 243px
+    left: 0
+    padding: 50px 10%
+    position: absolute
+    right: 0
+    text-align: left
+    top: 241px
+    width: 80%
+    +background-image(radial-gradient(center top, #fff, #f5f5f5 50%))
+    h4
+      color: $primary
+      font: bold 17px/1.5 "Droid Sans", sans-serif
+      margin-bottom: 15px
+      text-transform: uppercase
+    p
+      color: #666
+      font: 12px/1.4 arial, sans-serif
+      margin-bottom: 10px
+    img
+      border: 1px solid #ccc
+      margin-right: 30px
+      margin-bottom: 30px
+      +box-shadow(#ddd 0px 0px 3px)
+      
 #header
-  background: url('../images/bg/header_bg.png') repeat-x center
+  background: $primary
+  border-bottom: 1px solid $primary + #090909
   height: 90px
   position: relative
   +pie-clearfix
   
   h2
-    color: $primary + #090909
+    color: #fff
     font-family: Arial, sans-serif
     font-size: 15px
     line-height: 1.4
@@ -38,7 +112,7 @@ body
     width: 500px
     +text-shadow(#fff, 0, 1px, 0)
     span
-      color: $primary + #222
+      color: $filler
       display: block
       font-size: 11px
       letter-spacing: 0.3px
@@ -47,10 +121,10 @@ body
       padding-left: 10px
   
 #logo
-  color: $primary_alt
-  font: bold 42px arial, sans-serif
+  color: #fff
+  font: bold 42px "Droid Sans", arial, sans-serif
   padding-top: 36px
-  +text-shadow(#fff, 0, 1px, 0)
+  +text-shadow(rgba(0, 0, 0, 0.2) 0 1px 1px)
   // fterrier start: link displays as text
   a
     font: inherit
@@ -76,17 +150,17 @@ body
     margin-left: 3px
 
   a
-    background: $filler
-    color: $primary
+    background: $primary_alt
+    color: #fff
     display: inline-block
     font-size: 9px
     padding: 7px 6px 5px
     text-decoration: none
     text-transform: uppercase
-    +border-bottom-radius(3px)
+    +border-bottom-radius(1px)
     &:hover, &:focus, &.no-link
-      background: $primary
-      color: #fff
+      background: #fff
+      color: $primary_dark
       
 #switcher
   left: 0
@@ -96,10 +170,13 @@ body
 
 // Main navigation
 #navigation
-  background: url('../images/bg/nav_bg.png') repeat-x
-  height: 42px
+  background: $primary_alt
+  border-top: 1px solid $primary_alt - #111
+  border-bottom: 1px solid $primary_alt - #111
+  height: 45px
   position: relative
   z-index: 50
+  +pie-clearfix
 
 #main-menu
   float: left
@@ -109,53 +186,59 @@ body
     float: left
     position: relative
     &:first-child
-      border-left: 1px solid $primary_light
+      border-left: 1px solid $primary_alt - #111
     &:last-child
-      border-right: 1px solid $primary_dark
+      border-right: 1px solid $primary_alt + #050505
       
-    &:hover > .submenu
-      display: block
+    &:hover 
+      > .submenu
+        display: block
+      > a
+        background: $primary_dark
+        border-left-color: $primary_dark
       
   a
-    border-left: 1px solid $primary_dark
-    border-right: 1px solid $primary_light
+    border-right: 1px solid $primary_alt - #111
+    border-left: 1px solid $primary_alt + #050505
     color: #fff
     display: inline-block
     font-size: 12px
     font-weight: bold
-    padding: 15px 22px
+    letter-spacing: 0.05em
+    padding: 17px 22px 17px 15px
     text-decoration: none
-    +text-shadow(rgba(0, 0, 0, 0.3), 0, 1px, 0)
+    +text-shadow(rgba(0, 0, 0, 0.3) 0 1px 0)
     &:hover, &:focus, &.active
       background: $primary_dark
-      +box-shadow($primary - #222, 0, -3px, 8px, 6px, inset)
+      border-left: 1px solid $primary_dark
+
     &:active
       +box-shadow($primary - #292929, 0, -2px, 10px, 10px, inset)    
   a.home
-    height: 16px
-    padding: 12px 22px
+    height: 19px
+    padding: 13px 22px
 
   .submenu
     width: 180px
-    background: $primary
-    border: 1px solid $primary_dark
+    background: $primary_dark
+    border: 1px solid $primary_dark - #111
     display: none
-    opacity: 0.93
+    left: -1px
     padding: 0px
     position: absolute
-    top: 41px
+    top: 45px
     z-index: 30
-    +border-bottom-radius
-    +box-shadow(#ccc 2px 2px 3px, $primary_dark 0 0 8px 3px inset)
+    +border-bottom-radius(1px)
     a
-      border-bottom: 1px solid $primary_dark
+      border-bottom: 1px solid $primary_dark - #0b0b0b
+      border-left: none
       display: block
       font-size: 12px
       font-weight: normal
       padding: 7px 25px 7px
       white-space: nowrap
       &:hover, &:focus
-        background: $primary_dark
+        background: $primary_dark - #111
         
     > li:hover > .sub-submenu > .submenu
       display: block
@@ -169,6 +252,13 @@ body
       +border-bottom-radius(0)
       +border-right-radius
       
+// Main search
+#main_search
+  position: absolute
+  right: 0
+  top: 100px
+  z-index: 60
+
 // Logout navigation
 #logout
   position: absolute

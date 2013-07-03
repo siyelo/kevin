@@ -811,3 +811,9 @@ function log() {
 };
 
 })(jQuery);
+
+
+jQuery('#landing-main ul li').hover(function() {
+    jQuery('li').removeClass('active');
+    jQuery(this).addClass('active');
+});
