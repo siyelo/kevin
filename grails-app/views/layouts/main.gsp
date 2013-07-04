@@ -70,7 +70,7 @@
 			</h2>
 			
 			<div id="main_search">
-				<input type="text" placeholder="Search here" />
+				<input type="text" class="idle-field" placeholder="Search here" />
 				<input type="submit" value="Search" class="small" />
 			</div>
 

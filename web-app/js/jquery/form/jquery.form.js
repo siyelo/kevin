@@ -812,7 +812,9 @@ function log() {
 
 })(jQuery);
 
-
+/**
+ * Active hover class for the landing page
+ */
 jQuery('#landing-main ul li').hover(function() {
     jQuery('li').removeClass('active');
     jQuery(this).addClass('active');

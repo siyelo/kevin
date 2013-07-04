@@ -52,7 +52,7 @@
 				</div>
 			</li>
 		</ul>
-
+		
 		<!-- <shiro:hasPermission permission="menu:reports">
 			<g:render template="landingPageItem" model="[
 				title: message(code: 'landingpage.reports.label'), image: 'reports.png', text: message(code: 'landingpage.reports.text'),
@@ -80,5 +80,22 @@
 			</shiro:hasPermission>
 		</g:if>
 	</div>
+	<ul class="landing-more">
+		<li class="third">
+			<img src="../images/icons/icon-landing-email.png" class="left" />
+			<h4>Contact Us</h4>
+			<p>contact@dhsst.org</p>
+		</li>
+		<li class="third">
+			<img src="../images/icons/icon-landing-help.png" class="left" />
+			<h4>Helpdesk</h4>
+			<p>Having problems? Call 144</p>
+		</li>
+		<li class="third">
+			<img src="../images/icons/icon-landing-bug.png" class="left" />
+			<h4>Report a bug</h4>
+			<p>Go to Redmine to report</p>
+		</li>
+	</ul>
 </body>
 </html>
