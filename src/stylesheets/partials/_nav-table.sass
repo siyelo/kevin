@@ -89,9 +89,12 @@
     
   &.number
     //slister start
-    tr:hover
-      background: #f9f9f9
-      //slister end
+    tr
+      &:first-child td
+        border-top: 1px solid $primary
+      &:hover, &:focus
+        background: #f9f9f9
+        //slister end
     td, th
       padding: 7px 15px
       //slister start
