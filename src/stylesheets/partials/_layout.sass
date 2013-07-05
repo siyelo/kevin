@@ -12,12 +12,19 @@ body
   padding-top: 15px
   
   .main
-    padding: 15px
+    background: #fff
     font-size: 12px
+    padding: 15px
+    +border-bottom-radius(5px)
+    +box-shadow(0 0 2px #CCCCCC)
     +pie-clearfix
+
   #landing-main
+    background: none
     border-top: 1px solid #f9f9f9
     padding: 15px 0
+    +border-radius(0)
+    +box-shadow(none)
 
 
 .landing-heading
