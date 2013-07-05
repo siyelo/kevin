@@ -1077,36 +1077,36 @@ textarea.login-field { width: 400px; height: 50px; text-align: left; }
 .map_legend li .indicator-quartile-dark-4 { background: #00441b; display: none; }
 
 /* line 78, ../../src/stylesheets/partials/_maps.sass */
-.map { font-weight: bold; height: 500px; margin: 10px auto 0px; width: 948px; }
-/* line 84, ../../src/stylesheets/partials/_maps.sass */
+.map { font-weight: bold; height: 500px; width: 968px; }
+/* line 83, ../../src/stylesheets/partials/_maps.sass */
 .map .report-value-marker-true { color: #258cd5; font-size: 25px; opacity: 1; }
-/* line 88, ../../src/stylesheets/partials/_maps.sass */
+/* line 87, ../../src/stylesheets/partials/_maps.sass */
 .map .report-value-marker-true:hover { font-size: 27px !important; }
-/* line 90, ../../src/stylesheets/partials/_maps.sass */
+/* line 89, ../../src/stylesheets/partials/_maps.sass */
 .map .report-value-marker-false { color: #e93100; font-size: 20px; font-weight: normal; opacity: 0.5; }
-/* line 95, ../../src/stylesheets/partials/_maps.sass */
+/* line 94, ../../src/stylesheets/partials/_maps.sass */
 .map .report-value-marker-false:hover { font-size: 22px !important; }
-/* line 97, ../../src/stylesheets/partials/_maps.sass */
+/* line 96, ../../src/stylesheets/partials/_maps.sass */
 .map .report-value-marker-number { opacity: 0.75; }
-/* line 102, ../../src/stylesheets/partials/_maps.sass */
+/* line 101, ../../src/stylesheets/partials/_maps.sass */
 .map .report-value-marker-enum, .map .report-value-marker-string, .map .report-value-marker-text { font-size: 15px; opacity: 0.75; }
-/* line 107, ../../src/stylesheets/partials/_maps.sass */
+/* line 106, ../../src/stylesheets/partials/_maps.sass */
 .map .report-value-marker-enum:hover, .map .report-value-marker-string:hover, .map .report-value-marker-text:hover { font-size: 16px !important; }
-/* line 109, ../../src/stylesheets/partials/_maps.sass */
+/* line 108, ../../src/stylesheets/partials/_maps.sass */
 .map .report-value-marker-label { font-size: 20px; opacity: 0.75; }
-/* line 112, ../../src/stylesheets/partials/_maps.sass */
+/* line 111, ../../src/stylesheets/partials/_maps.sass */
 .map .report-value-marker-label:hover { font-size: 21px !important; }
-/* line 114, ../../src/stylesheets/partials/_maps.sass */
+/* line 113, ../../src/stylesheets/partials/_maps.sass */
 .map .report-value-marker-polygon-label, .map .report-value-marker-point-label { font-size: 12px; color: black; opacity: 0.75; }
-/* line 119, ../../src/stylesheets/partials/_maps.sass */
+/* line 118, ../../src/stylesheets/partials/_maps.sass */
 .map .report-value-marker-polygon-label:hover, .map .report-value-marker-point-label:hover { font-size: 13px !important; }
-/* line 121, ../../src/stylesheets/partials/_maps.sass */
+/* line 120, ../../src/stylesheets/partials/_maps.sass */
 .map .report-value-marker-na { font-size: 14px; color: gray; opacity: 0.75; }
-/* line 125, ../../src/stylesheets/partials/_maps.sass */
+/* line 124, ../../src/stylesheets/partials/_maps.sass */
 .map .report-value-marker-na:hover { font-size: 15px !important; }
-/* line 128, ../../src/stylesheets/partials/_maps.sass */
+/* line 127, ../../src/stylesheets/partials/_maps.sass */
 .map .leaflet-popup { bottom: 0px !important; }
-/* line 130, ../../src/stylesheets/partials/_maps.sass */
+/* line 129, ../../src/stylesheets/partials/_maps.sass */
 .map .leaflet-control-attribution a { font-size: 11px; }
 
 /* line 1, ../../src/stylesheets/partials/_tipsy.sass */
